@@ -8,7 +8,7 @@ import {HeaderActions} from "../header-action/header-actions";
     template: `
         <mat-toolbar class="w-full elevated py-2">
             <div class="max-w-[1200px] mx-auto w-full flex items-center justify-between">
-                <span>NKL Store</span>
+                <span>Keybober Store</span>
                 <app-header-actions/>
             </div>
         </mat-toolbar>
