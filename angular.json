@@ -76,8 +76,15 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+            "options": {
+              "baseHref": "https://artemananev.github.io/nkl-ecommerce/"
+            }
+          }
         }
       }
     }
   }
-}
+
