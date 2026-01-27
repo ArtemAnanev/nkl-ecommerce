@@ -160,6 +160,41 @@ export const EcommerceStore = signalStore(
 
       toaster.success(existingItemIndex !== -1 ? 'Product added again' : 'Product added to the Cart');
 
+    },
+
+    setItemQuantity(params: { productId: string, quantity: number }) {
+      const index = store.cartItems().findIndex(c => c.product.id === params.productId);
+      const updated = produce(store.cartItems(), (draft) => {
+        draft[index].quantity = params.quantity
+      })
+
+      patchState(store, {cartItems: updated});
+    },
+
+    addAllWishlistToCart: () => {
+      const updatedCartItems = produce(store.cartItems(), (draft) => {
+        store.wishlistItems().forEach(p => {
+          if (!draft.find(c => c.product.id === p.id)) {
+            draft.push({product: p, quantity: 1});
+          }
+        })
+      })
+
+      patchState(store, {cartItems: updatedCartItems, wishlistItems: []})
+    },
+
+    moveToWishlist: (product: Product) => {
+      const updatedCartItems = store.cartItems().filter((p => p.product.id !== product.id));
+      const updatedWishlistItems = produce(store.wishlistItems(), (draft) => {
+        if (!draft.find((p) => p.id === product.id)) {
+          draft.push(product);
+        }
+      })
+      patchState(store, {cartItems: updatedCartItems, wishlistItems: updatedWishlistItems})
+    },
+
+    removeFromCart: (product: Product) => {
+      patchState(store, {cartItems: store.cartItems().filter((c) => c.product.id !== product.id)})
     }
   }))
 )
