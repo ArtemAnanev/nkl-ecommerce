@@ -8,57 +8,58 @@ import {EcommerceStore} from "../../ecommerce-store";
 import {ToggleWishlistButton} from "../../components/toggle-wishlist-button/toggle-wishlist-button";
 
 @Component({
-    selector: 'app-products-grid',
-    imports: [ProductCard, MatSidenavContainer, MatSidenavContent, MatSidenav, MatNavList, MatListItem, MatListItemTitle, RouterLink, TitleCasePipe, ToggleWishlistButton],
-    template: `
-        <mat-sidenav-container>
-            <mat-sidenav mode="side" opened="true">
-                <div class="p-6">
-                    <h2 class="text-lg text-gray-900">Categories</h2>
+  selector: 'app-products-grid',
+  standalone: true,
+  imports: [ProductCard, MatSidenavContainer, MatSidenavContent, MatSidenav, MatNavList, MatListItem, MatListItemTitle, RouterLink, TitleCasePipe, ToggleWishlistButton],
+  template: `
+    <mat-sidenav-container>
+      <mat-sidenav mode="side" opened="true">
+        <div class="p-6">
+          <h2 class="text-lg text-gray-900">Categories</h2>
 
-                    <mat-nav-list>
-                        @for (cat of categories(); track cat) {
-                            <mat-list-item
-                                    [activated]="cat === category()"
-                                    class="my-2"
-                                    [routerLink]="['/products', cat]"
-                            >
+          <mat-nav-list>
+            @for (cat of categories(); track cat) {
+              <mat-list-item
+                [activated]="cat === category()"
+                class="my-2"
+                [routerLink]="['/products', cat]"
+              >
                                 <span
-                                        matListItemTitle
-                                        class="font-medium"
-                                        [class]="cat === category() ? '!text-white' : null"
+                                  matListItemTitle
+                                  class="font-medium"
+                                  [class]="cat === category() ? '!text-white' : null"
                                 >
                                     {{ cat | titlecase }}
                                 </span>
-                            </mat-list-item>
-                        }
-                    </mat-nav-list>
-                </div>
-            </mat-sidenav>
-            <mat-sidenav-content class="bg-gray-100 p-6 h-full">
-                <h1 class="text-2xl font-bold text-gray-900 mb-6"> {{ category() | titlecase }}</h1>
-                <p class="text-base text-gray-600 mb-6">
-                    {{ store.filteredProducts().length }} products found
-                </p>
-                <div class="responsive-grid">
-                    @for (product of store.filteredProducts(); track product.id) {
-                        <app-product-card [product]="product">
-                            <app-toggle-wishlist-button class="!absolute z-10 right-3 top-3" [product]="product" />
-                        </app-product-card>
-                    }
-                </div>
-            </mat-sidenav-content>
-        </mat-sidenav-container>
-    `,
-    styles: `
-    `,
+              </mat-list-item>
+            }
+          </mat-nav-list>
+        </div>
+      </mat-sidenav>
+      <mat-sidenav-content class="bg-gray-100 p-6 h-full">
+        <h1 class="text-2xl font-bold text-gray-900 mb-6"> {{ category() | titlecase }}</h1>
+        <p class="text-base text-gray-600 mb-6">
+          {{ store.filteredProducts().length }} products found
+        </p>
+        <div class="responsive-grid">
+          @for (product of store.filteredProducts(); track product.id) {
+            <app-product-card [product]="product">
+              <app-toggle-wishlist-button class="!absolute z-10 right-3 top-3" [product]="product"/>
+            </app-product-card>
+          }
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  `,
+  styles: `
+  `,
 })
 export default class ProductsGrid {
-    category = input<string>('all')
-    store = inject(EcommerceStore);
-    categories = signal<string[]>(['all', 'mouses', 'keyboards', 'pads']);
+  category = input<string>('all')
+  store = inject(EcommerceStore);
+  categories = signal<string[]>(['all', 'mouses', 'keyboards', 'pads']);
 
-    constructor() {
-        this.store.setCategory(this.category);
-    }
+  constructor() {
+    this.store.setCategory(this.category);
+  }
 }
