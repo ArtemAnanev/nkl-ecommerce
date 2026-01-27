@@ -1,1 +1,0 @@
-import{Hb as r,Xa as i,pb as n,qb as o}from"./chunk-NYIDAH4D.js";var t=class a{static \u0275fac=function(e){return new(e||a)};static \u0275cmp=i({type:a,selectors:[["app-view-cart"]],decls:2,vars:0,template:function(e,c){e&1&&(n(0,"p"),r(1," view-cart works! "),o())},encapsulation:2})};export{t as default};
