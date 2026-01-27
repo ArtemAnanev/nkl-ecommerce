@@ -11,20 +11,21 @@ import {MatIcon} from "@angular/material/icon";
     MatIcon
   ],
   template: `
-    <button 
-        matButton="text" 
-        [routerLink]="navigateTo() ?? null"
-        class="-ms-2 flex items-center gap-1"
+    <button
+      matButton="text"
+      [routerLink]="navigateTo() ?? null"
+      class="-ms-2 flex items-center gap-1"
     >
       <mat-icon>arrow_back</mat-icon>
-      <ng-content />
+      <ng-content/>
     </button>
   `,
   styles: `
-  :host {
-    display: block;
-  }
+    :host {
+      display: block;
+    }
   `,
+  standalone: true
 })
 export class BackButton {
   label = input('')

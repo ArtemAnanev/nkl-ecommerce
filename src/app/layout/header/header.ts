@@ -3,18 +3,19 @@ import {MatToolbar} from "@angular/material/toolbar";
 import {HeaderActions} from "../header-action/header-actions";
 
 @Component({
-    selector: 'app-header',
-    imports: [MatToolbar, HeaderActions],
-    template: `
-        <mat-toolbar class="w-full elevated py-2">
-            <div class="max-w-[1200px] mx-auto w-full flex items-center justify-between">
-                <span>Keybober Store</span>
-                <app-header-actions/>
-            </div>
-        </mat-toolbar>
+  selector: 'app-header',
+  imports: [MatToolbar, HeaderActions],
+  template: `
+    <mat-toolbar class="w-full elevated py-2">
+      <div class="max-w-[1200px] mx-auto w-full flex items-center justify-between">
+        <span>Keybober Store</span>
+        <app-header-actions/>
+      </div>
+    </mat-toolbar>
 
-    `,
-    styles: ``,
+  `,
+  styles: ``,
+  standalone: true
 })
 export class Header {
 

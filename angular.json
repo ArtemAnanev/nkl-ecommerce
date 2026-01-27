@@ -14,7 +14,8 @@
           "style": "scss",
           "skipTests": true,
           "inlineTemplate": true,
-          "inlineStyle": true
+          "inlineStyle": true,
+          "standalone": true
         }
       },
       "root": "",
@@ -79,12 +80,12 @@
         },
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
-            "options": {
-              "baseHref": "https://artemananev.github.io/nkl-ecommerce/"
-            }
+          "options": {
+            "baseHref": "https://artemananev.github.io/nkl-ecommerce/"
           }
         }
       }
     }
   }
+}
 
