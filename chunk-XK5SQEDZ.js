@@ -1,0 +1,1 @@
+import{Ub as s,bb as c,wb as n,xb as a}from"./chunk-HLFQNZYD.js";var t=class o{static \u0275fac=function(e){return new(e||o)};static \u0275cmp=c({type:o,selectors:[["app-checkout"]],decls:2,vars:0,template:function(e,p){e&1&&(n(0,"p"),s(1," checkout works! "),a())},encapsulation:2})};export{t as default};
