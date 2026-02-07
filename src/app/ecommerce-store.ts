@@ -8,6 +8,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {SignInDialog} from './components/sign-in-dialog/sign-in-dialog';
 import {SignInParams, SignUpParams, User} from './models/user';
 import {Router} from '@angular/router';
+import {Order} from './models/order';
+import {withStorageSync} from '@angular-architects/ngrx-toolkit'
 
 export type EcommerceState = {
   products: Product[];
@@ -15,6 +17,7 @@ export type EcommerceState = {
   wishlistItems: Product[];
   cartItems: CartItem[];
   user: User | undefined;
+  loading: boolean;
 }
 
 export const EcommerceStore = signalStore(
@@ -72,7 +75,7 @@ export const EcommerceStore = signalStore(
         name: 'Mechanical Keyboard RGB',
         description: 'Tactile mechanical keys with customizable backlighting and durable build.',
         price: 129.99,
-        imageUrl: 'images/keyboard.jpg',
+        imageUrl: 'images/keyboard.png',
         rating: 4.6,
         reviewCount: 115,
         inStock: true,
@@ -105,7 +108,7 @@ export const EcommerceStore = signalStore(
         name: 'Mechanical Keyboard RGB',
         description: 'Tactile mechanical keys with customizable backlighting and durable build.',
         price: 129.99,
-        imageUrl: 'images/keyboard.jpg',
+        imageUrl: 'images/keyboard.png',
         rating: 4.6,
         reviewCount: 115,
         inStock: true,
@@ -116,7 +119,12 @@ export const EcommerceStore = signalStore(
     wishlistItems: [],
     cartItems: [],
     user: undefined,
+    loading: false,
   } as EcommerceState),
+  withStorageSync({
+    key: 'modern-store',
+    select: ({wishlistItems, cartItems, user}) => ({wishlistItems, cartItems, user}),
+  }),
   withComputed(({category, products, wishlistItems, cartItems}) => ({
     filteredProducts: computed(() => {
       if (category() === 'all') return products();
@@ -214,6 +222,28 @@ export const EcommerceStore = signalStore(
         return
       }
       router.navigate(['/checkout'])
+    },
+
+    placeOrder: async () => {
+      patchState(store, {loading: true})
+      const user = store.user();
+      if (!user) {
+        toaster.error('Please login before placing order')
+        patchState(store, {loading: false})
+        return;
+      }
+      const order: Order = {
+        id: crypto.randomUUID(),
+        userId: user.id,
+        total: Math.round(store
+          .cartItems()
+          .reduce((acc, item) => acc + item.quantity * item.product.price, 0)),
+        items: store.cartItems(),
+        paymentStatus: 'success',
+      };
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      patchState(store, {loading: false, cartItems: []});
+      router.navigate(['/order-success'])
     },
 
     signIn: ({email, password, checkout, dialogId}: SignInParams) => {
